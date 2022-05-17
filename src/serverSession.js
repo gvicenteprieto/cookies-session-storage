@@ -7,6 +7,7 @@ import auth from './middleware/auth.middleware.js';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+//se crea la instancia de FileStore
 const fileStore = FileStore(session)
 
 app.use(express.json());
@@ -21,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 //     })
 // );
 
-
+//se crea configuración para fileStore
 app.use(session
     ({
         store: new fileStore({
