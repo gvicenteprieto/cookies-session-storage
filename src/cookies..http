@@ -1,0 +1,19 @@
+
+###
+GET http://localhost:3000/allCookies
+
+###
+POST http://localhost:3000/postCookies
+Content-Type: application/json
+
+{
+    "name": "nameCookie_005",
+    "value": "valueCookie_005",
+    "time": 100000
+}
+
+###
+DELETE http://localhost:3000/deleteCookie/nameCookie_005
+
+
+
