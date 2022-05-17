@@ -1,44 +1,57 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import session from "express-session";
-import FileStore from 'session-file-store';
+//FileStore
+//import FileStore from 'session-file-store';
+
+//mongo
+import mongoStore from 'connect-mongo';
 import auth from './middleware/auth.middleware.js';
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 //se crea la instancia de FileStore
-const fileStore = FileStore(session)
+//const fileStore = FileStore(session)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //comentada la que se usó para express-session
-// app.use(
-//     session({
-//     secret: process.env.SECRET,
-//     resave: true,
-//     saveUninitialized:true
-//     })
-// );
+/*
+app.use(
+    session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized:true
+    })
+);
+*/
 
 //se crea configuración para fileStore
 app.use(session
     ({
-        store: new fileStore({
-            path: './sessions',
-            ttl: 300,
-            retries: 0,
-        }),
-        secret: process.env.SECRET,
-        resave: false,
-        saveUninitialized: false,
-        // cookie: {maxAge: 10000},
+        store: mongoStore.create({ 
+            mongoUrl: process.env.MONGO_URI,
+        options: {
+            userNewUrlParser: true,
+            useUnifiedTopologie: true
+        }
+    })
+        // store: new fileStore({
+        //     path: './sessions',
+        //     ttl: 300,
+        //     retries: 0,
+        // }),
+        // secret: process.env.SECRET,
+        // resave: false,
+        // saveUninitialized: false,
+        // // cookie: {maxAge: 10000},
     })
 );
 
 /*
-
+eliminar: ejemplo de ytube
 import mySQLStore from 'express-mysql-session';
 
 const options = {
