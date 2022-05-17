@@ -6,11 +6,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser(process.env.SECRET));
-
 
 const user = {
     name: "user_one", 
@@ -74,10 +72,6 @@ app.delete ('/deleteCookie/:name', (req, res) =>{
     const name = req.params.name
     res.clearCookie(name).send(`cookie ${name} was deleted`)
 });
-
-
-
-
 
 const server = app.listen(PORT, () => {
     console.log(`🚀 server running on port http://localhost:${PORT} 🛰️`);
